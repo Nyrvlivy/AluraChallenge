@@ -7,6 +7,9 @@ spring:
       ddl-auto: update
   main:
     banner-mode: off
+  flyway:
+    locations: classpath:db/migration
+    enabled: true
 
 server:
   port: 8080
