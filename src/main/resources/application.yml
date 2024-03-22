@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: AluraChallenge
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  main:
+    banner-mode: off
+
+server:
+  port: 8080
