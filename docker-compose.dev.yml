@@ -4,15 +4,19 @@ services:
     build: .
     ports:
       - "8081:8080"
+    env_file:
+      - .env.dev
     environment:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
     depends_on:
-      - mysql-db
+      - mysql-dev
 
-  mysql-db:
+  mysql-dev:
     image: mysql:8.0
+    env_file:
+      - .env.dev
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -21,7 +25,7 @@ services:
     ports:
       - "3307:3306"
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-data-dev:/var/lib/mysql
 
 volumes:
-  mysql-data:
+  mysql-data-dev:
