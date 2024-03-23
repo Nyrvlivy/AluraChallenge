@@ -1,31 +1,29 @@
-version: '3.8'
 services:
   app:
+    depends_on:
+      - 'mysql'
     build: .
     ports:
-      - "8081:8080"
-    env_file:
-      - .env.dev
+      - '$SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT'
+    restart: 'on-failure'
     environment:
-      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
-      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-    depends_on:
-      - mysql-dev
-
-  mysql-dev:
-    image: mysql:8.0
-    env_file:
-      - .env.dev
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    ports:
-      - "3307:3306"
+      - 'SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/alura_challenge_db'
+      - 'SPRING_DATASOURCE_USERNAME=${MYSQL_USER}'
+      - 'SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}'
     volumes:
-      - mysql-data-dev:/var/lib/mysql
+      - '.:/app'
+    tty: 'true'
+  mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=${MYSQL_DATABASE}'
+      - 'MYSQL_PASSWORD=${MYSQL_PASSWORD}'
+      - 'MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}'
+      - 'MYSQL_USER=${MYSQL_USER}'
+    ports:
+      - '${MYSQL_LOCAL_PORT}:${MYSQL_DOCKER_PORT}'
+    volumes:
+      - 'mysql:/var/lib/mysql'
 
 volumes:
-  mysql-data-dev:
+  mysql:
