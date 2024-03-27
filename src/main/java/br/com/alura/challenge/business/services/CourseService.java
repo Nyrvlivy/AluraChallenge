@@ -2,6 +2,7 @@ package br.com.alura.challenge.business.services;
 
 import br.com.alura.challenge.api.v1.dto.CourseDTO;
 import br.com.alura.challenge.api.v1.dto.CourseResponseDTO;
+import br.com.alura.challenge.api.v1.mapper.CourseMapper;
 import br.com.alura.challenge.infrastructure.entities.CourseEntity;
 import br.com.alura.challenge.infrastructure.entities.UserEntity;
 import br.com.alura.challenge.infrastructure.repositories.CourseRepository;
@@ -15,15 +16,19 @@ import java.time.LocalDateTime;
 @Service
 public class CourseService {
 
-    @Autowired
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
+    private final CourseMapper courseMapper;
 
     @Autowired
-    private UserRepository userRepository;
+    public CourseService(CourseRepository courseRepository, UserRepository userRepository, CourseMapper courseMapper) {
+        this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
+        this.courseMapper = courseMapper;
+    }
 
     @Transactional
     public CourseResponseDTO createCourse(CourseDTO courseDTO) {
-
         boolean status = courseDTO.getStatus() == null || courseDTO.getStatus();
 
         if (courseDTO.getInstructorId() == null) {
@@ -47,19 +52,7 @@ public class CourseService {
 
         course = courseRepository.save(course);
 
-        CourseResponseDTO responseDTO = new CourseResponseDTO();
-        responseDTO.setName(course.getName());
-        responseDTO.setCode(course.getCode());
-        responseDTO.setInstructorName(course.getInstructor().getName());
-        responseDTO.setDescription(course.getDescription());
-        responseDTO.setStatus(course.isStatus());
-        responseDTO.setCreatedAt(course.getCreatedAt());
-
-        if (!course.isStatus()) {
-            responseDTO.setInactiveAt(course.getInactiveAt());
-        }
-
-        return responseDTO;
+        return courseMapper.toCourseResponseDTO(course);
     }
 
     public CourseResponseDTO disableCourse(String code) {
@@ -75,19 +68,7 @@ public class CourseService {
 
         course = courseRepository.save(course);
 
-        return convertToCourseResponseDTO(course);
-    }
-
-    private CourseResponseDTO convertToCourseResponseDTO(CourseEntity course) {
-        CourseResponseDTO responseDTO = new CourseResponseDTO();
-        responseDTO.setName(course.getName());
-        responseDTO.setCode(course.getCode());
-        responseDTO.setInstructorName(course.getInstructor().getName());
-        responseDTO.setDescription(course.getDescription());
-        responseDTO.setStatus(course.isStatus());
-        responseDTO.setCreatedAt(course.getCreatedAt());
-        responseDTO.setInactiveAt(course.getInactiveAt());
-        return responseDTO;
+        return courseMapper.toCourseResponseDTO(course);
     }
 
     public CourseResponseDTO enableCourse(String code) {
@@ -103,8 +84,6 @@ public class CourseService {
 
         course = courseRepository.save(course);
 
-        return convertToCourseResponseDTO(course);
+        return courseMapper.toCourseResponseDTO(course);
     }
-
-
 }

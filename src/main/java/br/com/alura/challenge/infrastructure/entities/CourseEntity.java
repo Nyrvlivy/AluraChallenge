@@ -43,10 +43,8 @@ public class CourseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
-    @CreationTimestamp
     @Column(name = "inactive_at")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime inactiveAt;
 
 }
-
