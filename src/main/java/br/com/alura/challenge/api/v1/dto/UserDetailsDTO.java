@@ -14,5 +14,5 @@ public class UserDetailsDTO {
     private String email;
     @JsonProperty(value = "role")
     private String role;
-}
 
+}
