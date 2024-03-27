@@ -16,5 +16,7 @@ public class RegisterUserDTO {
     private String email;
     @JsonProperty(value = "password")
     private String password;
+    @JsonProperty(value = "role")
+    private RoleDTO role;
 
 }

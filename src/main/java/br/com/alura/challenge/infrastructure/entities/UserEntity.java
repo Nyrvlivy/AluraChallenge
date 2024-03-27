@@ -9,9 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity(name = "UserEntity")
 @Table(name = "users", uniqueConstraints = {
@@ -40,17 +38,13 @@ public class UserEntity implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<RoleEntity> roles = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    private RoleEntity role;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Override

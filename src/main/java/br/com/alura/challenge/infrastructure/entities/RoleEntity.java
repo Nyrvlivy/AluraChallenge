@@ -2,12 +2,7 @@ package br.com.alura.challenge.infrastructure.entities;
 
 import br.com.alura.challenge.infrastructure.enums.RoleName;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.HashSet;
-import java.util.Set;
+import lombok.*;
 
 @Entity(name = "RoleEntity")
 @Table(name = "roles")
@@ -23,8 +18,5 @@ public class RoleEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "name", nullable = false, unique = true, length = 50)
     private RoleName name;
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<UserEntity> users = new HashSet<>();
 
 }
