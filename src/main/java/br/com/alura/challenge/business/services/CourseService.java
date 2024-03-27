@@ -8,6 +8,8 @@ import br.com.alura.challenge.infrastructure.entities.UserEntity;
 import br.com.alura.challenge.infrastructure.repositories.CourseRepository;
 import br.com.alura.challenge.infrastructure.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,5 +87,13 @@ public class CourseService {
         course = courseRepository.save(course);
 
         return courseMapper.toCourseResponseDTO(course);
+    }
+
+    public Page<CourseEntity> findAll(Pageable pageable) {
+        return courseRepository.findAll(pageable);
+    }
+
+    public Page<CourseEntity> findByStatus(boolean status, Pageable pageable) {
+        return courseRepository.findByStatus(status, pageable);
     }
 }
