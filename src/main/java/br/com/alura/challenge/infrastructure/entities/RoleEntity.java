@@ -2,7 +2,9 @@ package br.com.alura.challenge.infrastructure.entities;
 
 import br.com.alura.challenge.infrastructure.enums.RoleName;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity(name = "RoleEntity")
 @Table(name = "roles")

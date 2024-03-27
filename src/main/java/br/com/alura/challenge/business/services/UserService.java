@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -36,8 +37,4 @@ public class UserService {
         dto.setRole(userEntity.getRole().getName().name());
         return dto;
     }
-
-
-
-
 }

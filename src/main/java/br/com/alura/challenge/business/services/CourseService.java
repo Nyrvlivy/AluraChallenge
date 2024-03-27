@@ -1,7 +1,7 @@
 package br.com.alura.challenge.business.services;
 
 import br.com.alura.challenge.api.v1.dto.CourseDTO;
-import br.com.alura.challenge.api.v1.dto.CourseResponseDTO;
+import br.com.alura.challenge.api.v1.dto.response.CourseResponseDTO;
 import br.com.alura.challenge.api.v1.mapper.CourseMapper;
 import br.com.alura.challenge.infrastructure.entities.CourseEntity;
 import br.com.alura.challenge.infrastructure.entities.UserEntity;

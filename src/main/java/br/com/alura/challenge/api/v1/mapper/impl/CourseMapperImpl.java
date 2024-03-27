@@ -1,6 +1,6 @@
 package br.com.alura.challenge.api.v1.mapper.impl;
 
-import br.com.alura.challenge.api.v1.dto.CourseResponseDTO;
+import br.com.alura.challenge.api.v1.dto.response.CourseResponseDTO;
 import br.com.alura.challenge.api.v1.mapper.CourseMapper;
 import br.com.alura.challenge.infrastructure.entities.CourseEntity;
 import org.springframework.stereotype.Component;

@@ -21,6 +21,7 @@ import java.util.List;
 @RequestMapping("/users")
 @Tag(name = "Users")
 public class UserController {
+
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -50,6 +51,4 @@ public class UserController {
         UserDetailsDTO userResponse = userService.toUserDetailsDTO(user);
         return ResponseEntity.ok(userResponse);
     }
-
-
 }

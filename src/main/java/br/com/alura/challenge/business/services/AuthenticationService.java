@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @Service
 public class AuthenticationService {
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -71,5 +72,4 @@ public class AuthenticationService {
 
         return userEntity.orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail));
     }
-
 }

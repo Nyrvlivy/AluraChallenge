@@ -1,4 +1,4 @@
-package br.com.alura.challenge.api.v1.dto;
+package br.com.alura.challenge.api.v1.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

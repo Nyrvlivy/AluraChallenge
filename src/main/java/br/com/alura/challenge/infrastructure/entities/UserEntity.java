@@ -8,7 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -54,12 +53,10 @@ public class UserEntity implements UserDetails {
         return List.of(new SimpleGrantedAuthority(this.role.getName().name()));
     }
 
-
     @Override
     public String getUsername() {
         return this.username;
     }
-
 
     public String getPassword() {
         return password;

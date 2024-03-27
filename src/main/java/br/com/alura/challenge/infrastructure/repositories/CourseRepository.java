@@ -10,7 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface CourseRepository extends JpaRepository<CourseEntity, Long> {
+
     Optional<CourseEntity> findByCode(String code);
 
     Page<CourseEntity> findByStatus(boolean status, Pageable pageable);
+
 }

@@ -1,8 +1,8 @@
 package br.com.alura.challenge.api.v1.controller;
 
-import br.com.alura.challenge.api.v1.dto.LoginResponseDTO;
 import br.com.alura.challenge.api.v1.dto.LoginUserDTO;
 import br.com.alura.challenge.api.v1.dto.RegisterUserDTO;
+import br.com.alura.challenge.api.v1.dto.response.LoginResponseDTO;
 import br.com.alura.challenge.business.services.AuthenticationService;
 import br.com.alura.challenge.business.services.JwtService;
 import br.com.alura.challenge.infrastructure.entities.UserEntity;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @RestController
 public class AuthenticationController {
+
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
 
