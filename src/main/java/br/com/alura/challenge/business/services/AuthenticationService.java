@@ -9,8 +9,12 @@ import br.com.alura.challenge.infrastructure.repositories.RoleRepository;
 import br.com.alura.challenge.infrastructure.repositories.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthenticationService {
@@ -52,14 +56,20 @@ public class AuthenticationService {
     }
 
     public UserEntity authenticate(LoginUserDTO input) {
-        authenticationManager.authenticate(
+        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        input.getEmail(),
+                        input.getLogin(),
                         input.getPassword()
                 )
         );
 
-        return userRepository.findByEmail(input.getEmail())
-                .orElseThrow();
+        String usernameOrEmail = input.getLogin();
+        Optional<UserEntity> userEntity = userRepository.findByEmail(usernameOrEmail);
+        if (userEntity.isEmpty()) {
+            userEntity = userRepository.findByUsername(usernameOrEmail);
+        }
+
+        return userEntity.orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail));
     }
+
 }
