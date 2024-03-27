@@ -28,3 +28,14 @@ CREATE TABLE IF NOT EXISTS `courses`
     inactive_at   TIMESTAMP DEFAULT NULL,
     foreign key (instructor_id) references `users` (id)
 );
+
+CREATE TABLE IF NOT EXISTS `enrollments`
+(
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id     BIGINT NOT NULL,
+    course_id   BIGINT NOT NULL,
+    enrolled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES `users` (id),
+    FOREIGN KEY (course_id) REFERENCES `courses` (id),
+    UNIQUE KEY unique_enrollment (user_id, course_id)
+);

@@ -7,7 +7,6 @@ import br.com.alura.challenge.infrastructure.entities.CourseEntity;
 import br.com.alura.challenge.infrastructure.entities.UserEntity;
 import br.com.alura.challenge.infrastructure.repositories.CourseRepository;
 import br.com.alura.challenge.infrastructure.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,6 @@ public class CourseService {
     private final UserRepository userRepository;
     private final CourseMapper courseMapper;
 
-    @Autowired
     public CourseService(CourseRepository courseRepository, UserRepository userRepository, CourseMapper courseMapper) {
         this.courseRepository = courseRepository;
         this.userRepository = userRepository;
@@ -37,7 +35,7 @@ public class CourseService {
             throw new IllegalArgumentException("Instructor ID cannot be null");
         }
 
-        Integer instructorId = courseDTO.getInstructorId().intValue();
+        Long instructorId = courseDTO.getInstructorId();
         UserEntity instructor = userRepository.findById(instructorId)
                 .orElseThrow(() -> new IllegalArgumentException("Instructor not found"));
 
