@@ -8,10 +8,10 @@ import lombok.Setter;
 @Setter
 public class UserDetailsDTO {
 
-    @JsonProperty(value = "email")
-    private String email;
     @JsonProperty(value = "name")
     private String name;
+    @JsonProperty(value = "email")
+    private String email;
     @JsonProperty(value = "role")
     private String role;
 }

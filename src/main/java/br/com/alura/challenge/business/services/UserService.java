@@ -1,5 +1,6 @@
 package br.com.alura.challenge.business.services;
 
+import br.com.alura.challenge.api.v1.dto.UserDetailsDTO;
 import br.com.alura.challenge.infrastructure.entities.UserEntity;
 import br.com.alura.challenge.infrastructure.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,15 @@ public class UserService {
     public Optional<UserEntity> findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public UserDetailsDTO toUserDetailsDTO(UserEntity userEntity) {
+        UserDetailsDTO dto = new UserDetailsDTO();
+        dto.setName(userEntity.getName());
+        dto.setEmail(userEntity.getEmail());
+        dto.setRole(userEntity.getRole().getName().name());
+        return dto;
+    }
+
 
 
 

@@ -1,6 +1,7 @@
 package br.com.alura.challenge.api.v1.controller;
 
 
+import br.com.alura.challenge.api.v1.dto.UserDetailsDTO;
 import br.com.alura.challenge.business.services.UserService;
 import br.com.alura.challenge.infrastructure.entities.UserEntity;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,10 +44,12 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<UserEntity> getUserByUsername(@PathVariable String username) {
+    public ResponseEntity<UserDetailsDTO> getUserByUsername(@PathVariable String username) {
         UserEntity user = userService.findUserByUsername(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-        return ResponseEntity.ok(user);
+        UserDetailsDTO userResponse = userService.toUserDetailsDTO(user);
+        return ResponseEntity.ok(userResponse);
     }
+
 
 }
