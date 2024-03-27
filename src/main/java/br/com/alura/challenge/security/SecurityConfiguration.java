@@ -30,7 +30,8 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/auth/**", "/", "/status", "/swagger-ui/**", "/v3/api-docs/**", "/users/me").permitAll()
+                        .requestMatchers("/users/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
