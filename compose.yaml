@@ -12,7 +12,7 @@ services:
       - 'SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}'
     volumes:
       - '.:/app'
-    tty: 'true'
+    tty: true
   mysql:
     image: 'mysql:latest'
     environment:
