@@ -7,6 +7,8 @@ import br.com.alura.challenge.infrastructure.entities.UserEntity;
 import br.com.alura.challenge.infrastructure.enums.RoleName;
 import br.com.alura.challenge.infrastructure.repositories.RoleRepository;
 import br.com.alura.challenge.infrastructure.repositories.UserRepository;
+import br.com.alura.challenge.utils.EmailValidator;
+import br.com.alura.challenge.utils.UsernameValidator;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -37,6 +39,12 @@ public class AuthenticationService {
     }
 
     public UserEntity signup(RegisterUserDTO input) {
+        if (!EmailValidator.isEmailValid(input.getEmail())) {
+            throw new RuntimeException("Invalid email format");
+        }
+        if (!UsernameValidator.isUsernameValid(input.getUsername())) {
+            throw new RuntimeException("Invalid username format");
+        }
         UserEntity newUser = new UserEntity();
         newUser.setName(input.getName());
         newUser.setUsername(input.getUsername());
