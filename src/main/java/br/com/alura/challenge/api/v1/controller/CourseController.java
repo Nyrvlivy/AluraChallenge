@@ -37,6 +37,7 @@ public class CourseController {
             @ApiResponse(responseCode = "403", description = "Forbidden - Requires admin privileges"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
+    @CrossOrigin
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<CourseResponseDTO> createCourse(@RequestBody CourseDTO courseDTO) {
@@ -52,6 +53,7 @@ public class CourseController {
             @ApiResponse(responseCode = "404", description = "Course not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
+    @CrossOrigin
     @PutMapping("/{code}/disable")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<CourseResponseDTO> disableCourse(@PathVariable String code) {
@@ -68,6 +70,7 @@ public class CourseController {
             @ApiResponse(responseCode = "404", description = "Course not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
+    @CrossOrigin
     @PutMapping("/{code}/enable")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<CourseResponseDTO> enableCourse(@PathVariable String code) {
