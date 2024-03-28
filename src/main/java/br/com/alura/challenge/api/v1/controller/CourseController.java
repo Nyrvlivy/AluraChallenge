@@ -35,7 +35,7 @@ public class CourseController {
             @ApiResponse(responseCode = "400", description = "Invalid data provided"),
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "403", description = "Admin privileges required"),
-            @ApiResponse(responseCode = "500", description = "Server error")
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -50,7 +50,7 @@ public class CourseController {
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "403", description = "Admin privileges required"),
             @ApiResponse(responseCode = "404", description = "Course not found"),
-            @ApiResponse(responseCode = "500", description = "Server error")
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PutMapping("/{code}/disable")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -66,7 +66,7 @@ public class CourseController {
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "403", description = "Admin privileges required"),
             @ApiResponse(responseCode = "404", description = "Course not found"),
-            @ApiResponse(responseCode = "500", description = "Server error")
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PutMapping("/{code}/enable")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
