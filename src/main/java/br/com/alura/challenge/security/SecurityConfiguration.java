@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/auth/**", "/", "/status", "/swagger-ui/**", "/v3/api-docs/**", "/users/me").permitAll()
+                        .requestMatchers("/enrollments/**").permitAll()
                         .requestMatchers("/users/**", "/courses/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )

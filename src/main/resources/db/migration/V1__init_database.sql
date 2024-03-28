@@ -39,3 +39,16 @@ CREATE TABLE IF NOT EXISTS `enrollments`
     FOREIGN KEY (course_id) REFERENCES `courses` (id),
     UNIQUE KEY unique_enrollment (user_id, course_id)
 );
+
+CREATE TABLE IF NOT EXISTS `ratings`
+(
+    id        BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id   BIGINT NOT NULL,
+    course_id BIGINT NOT NULL,
+    score     INT    NOT NULL,
+    comment   TEXT,
+    rated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES `users` (id),
+    FOREIGN KEY (course_id) REFERENCES `courses` (id),
+    UNIQUE KEY unique_rating (user_id, course_id)
+);
