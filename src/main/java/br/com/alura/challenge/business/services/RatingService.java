@@ -60,6 +60,7 @@ public class RatingService {
         context.setVariable("courseName", rating.getCourse().getName());
         context.setVariable("score", rating.getScore());
         context.setVariable("comment", rating.getComment());
+        context.setVariable("instructorName", rating.getCourse().getInstructor().getName());
 
         try {
             emailSenderService.sendEmail(instructorEmail, "Low Course Rating Alert", "emailTemplate.html", context);
