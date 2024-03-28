@@ -7,8 +7,11 @@ import br.com.alura.challenge.infrastructure.entities.CourseEntity;
 import br.com.alura.challenge.infrastructure.entities.UserEntity;
 import br.com.alura.challenge.infrastructure.repositories.CourseRepository;
 import br.com.alura.challenge.infrastructure.repositories.UserRepository;
+import br.com.alura.challenge.utils.CourseCodeValidator;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +32,10 @@ public class CourseService {
 
     @Transactional
     public CourseResponseDTO createCourse(CourseDTO courseDTO) {
+        if (!CourseCodeValidator.isCourseCodeValid(courseDTO.getCode())) {
+            throw new IllegalArgumentException("Invalid course code");
+        }
+
         boolean status = courseDTO.getStatus() == null || courseDTO.getStatus();
 
         if (courseDTO.getInstructorId() == null) {
@@ -88,7 +95,10 @@ public class CourseService {
     }
 
     public Page<CourseEntity> findAll(Pageable pageable) {
-        return courseRepository.findAll(pageable);
+        Pageable sortedByStatusPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
+                Sort.by(Sort.Order.desc("status"), Sort.Order.asc("name")));
+
+        return courseRepository.findAll(sortedByStatusPageable);
     }
 
     public Page<CourseEntity> findByStatus(boolean status, Pageable pageable) {
