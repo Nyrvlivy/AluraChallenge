@@ -33,8 +33,8 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Course successfully created"),
             @ApiResponse(responseCode = "400", description = "Invalid data provided"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized"),
-            @ApiResponse(responseCode = "403", description = "Admin privileges required"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Requires authentication"),
+            @ApiResponse(responseCode = "403", description = "Forbidden - Requires admin privileges"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping
@@ -47,8 +47,8 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Course successfully disabled"),
             @ApiResponse(responseCode = "400", description = "Invalid data provided"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized"),
-            @ApiResponse(responseCode = "403", description = "Admin privileges required"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Requires authentication"),
+            @ApiResponse(responseCode = "403", description = "Forbidden - Requires admin privileges"),
             @ApiResponse(responseCode = "404", description = "Course not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
@@ -63,8 +63,8 @@ public class CourseController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Course successfully enabled"),
             @ApiResponse(responseCode = "400", description = "Invalid data provided"),
-            @ApiResponse(responseCode = "401", description = "Unauthorized"),
-            @ApiResponse(responseCode = "403", description = "Admin privileges required"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Requires authentication"),
+            @ApiResponse(responseCode = "403", description = "Forbidden - Requires admin privileges"),
             @ApiResponse(responseCode = "404", description = "Course not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
