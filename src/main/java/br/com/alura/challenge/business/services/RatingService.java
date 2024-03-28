@@ -1,11 +1,15 @@
 package br.com.alura.challenge.business.services;
 
 import br.com.alura.challenge.api.v1.dto.RatingDTO;
+import br.com.alura.challenge.api.v1.dto.response.RatingResponseDTO;
+import br.com.alura.challenge.api.v1.mapper.RatingMapper;
+import br.com.alura.challenge.infrastructure.entities.CourseEntity;
 import br.com.alura.challenge.infrastructure.entities.RatingEntity;
+import br.com.alura.challenge.infrastructure.entities.UserEntity;
 import br.com.alura.challenge.infrastructure.repositories.CourseRepository;
 import br.com.alura.challenge.infrastructure.repositories.RatingRepository;
-import br.com.alura.challenge.infrastructure.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
@@ -16,32 +20,38 @@ import java.time.LocalDateTime;
 public class RatingService {
 
     private final RatingRepository ratingRepository;
-    private final UserRepository userRepository;
     private final CourseRepository courseRepository;
     private final EmailSenderService emailSenderService;
+    private final RatingMapper ratingMapper;
 
-    @Autowired
-    public RatingService(RatingRepository ratingRepository, UserRepository userRepository, CourseRepository courseRepository, EmailSenderService emailSenderService) {
+    public RatingService(RatingRepository ratingRepository, CourseRepository courseRepository, EmailSenderService emailSenderService, RatingMapper ratingMapper) {
         this.ratingRepository = ratingRepository;
-        this.userRepository = userRepository;
         this.courseRepository = courseRepository;
         this.emailSenderService = emailSenderService;
+        this.ratingMapper = ratingMapper;
     }
 
     @Transactional
-    public void rateCourse(RatingDTO ratingDTO) {
+    public RatingResponseDTO rateCourse(RatingDTO ratingDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+
+        CourseEntity course = courseRepository.findById(ratingDTO.getCourseId())
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
         RatingEntity rating = new RatingEntity();
-        rating.setUser(userRepository.findById(ratingDTO.getUserId()).orElseThrow());
-        rating.setCourse(courseRepository.findById(ratingDTO.getCourseId()).orElseThrow());
+        rating.setUser(user);
+        rating.setCourse(course);
         rating.setScore(ratingDTO.getScore());
         rating.setComment(ratingDTO.getComment());
         rating.setRatedAt(LocalDateTime.now());
+        RatingEntity savedRating = ratingRepository.save(rating);
 
-        ratingRepository.save(rating);
-
-        if (rating.getScore() < 6) {
-            sendLowScoreNotification(rating);
+        if (savedRating.getScore() < 6) {
+            sendLowScoreNotification(savedRating);
         }
+
+        return ratingMapper.toRatingResponseDTO(savedRating);
     }
 
     private void sendLowScoreNotification(RatingEntity rating) {
@@ -54,7 +64,6 @@ public class RatingService {
         try {
             emailSenderService.sendEmail(instructorEmail, "Low Course Rating Alert", "emailTemplate.html", context);
         } catch (Exception e) {
-            // Log and handle the exception
             e.printStackTrace();
         }
     }
