@@ -413,4 +413,3 @@ even better!
 <div align="center">
   <img alt="Alura Challenge API Footer Banner" src="./.github/assets/images/api-footer.png">
 </div>
-
